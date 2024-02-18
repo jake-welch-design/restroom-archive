@@ -1,0 +1,71 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
+
+#instagramLink {
+  position: absolute; 
+  top: 10px;
+  right: 10px; 
+  font-family: 'Satoshi', Arial, sans-serif; 
+  font-size: 24px; 
+  color: #000000; 
+  text-decoration: none; 
+  line-height: 1.2; 
+}
+
+#instagramLink:hover {
+  text-decoration: none; 
+  color:#888888;
+}
+
+#control-panel h2 {
+  font-family: 'Satoshi', Arial, sans-serif;
+  font-size: 18px;
+  color: black;
+  margin-top: 0;
+  margin-left: 5px;
+  margin-bottom: 0px; 
+}
+
+.sliderStyle{
+  width: 160px;
+  background-color: white;
+  -webkit-appearance: none;
+}
+
+.sliderStyle:focus {
+  outline: none;
+}
+
+.sliderStyle::-webkit-slider-runnable-track {
+  background: #000000;
+  height: 3px;
+  width: 30px;
+  -webkit-appearance: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.sliderStyle::-webkit-slider-thumb {
+  width: 15px;
+  height: 15px;
+  background: #ff0000;
+  border-color:white;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -6px;
+  border-radius: 8px;
+}
+
+#control-panel {
+  padding: 5px;
+  background-color: white; 
+  max-width: 500px; 
+  user-select: none;
+}
+
