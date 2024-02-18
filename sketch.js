@@ -1,6 +1,6 @@
 let bathrooms = []; 
 let bathroomTextures = []; 
-let modelNum = 15;
+let modelNum = 16;
 let bathroomSelector;
 let font;
 let lastSliderValue = -1; 
