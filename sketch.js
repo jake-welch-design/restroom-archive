@@ -1,5 +1,5 @@
-let bathrooms = []; 
-let bathroomTextures = []; 
+let bathrooms = [];
+let bathroomTextures = [];
 let modelNum = 16;
 let bathroomSelector;
 let font;
@@ -10,7 +10,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
+  let cvsSize = min(windowWidth, windowHeight, 2048); 
+  createCanvas(cvsSize, cvsSize, WEBGL);
   frameRate(30);
 
   bathroomSelector = createSlider(0, modelNum - 1, 0);
@@ -20,7 +21,7 @@ function setup() {
   textFont(font);
   textSize(18);
   createEasyCam();
-  perspective(PI / 3.0, width / height, 0.5, 5000);
+  perspective(PI / 3.0, width / height, 0.1, 10000);
 
   for (let i = 0; i < modelNum; i++) {
     bathrooms[i] = null;
@@ -38,10 +39,6 @@ function draw() {
     if (!bathrooms[index]) {
       bathrooms[index] = loadModel('models/' + index + '.obj', true);
     }
-    // Check if the texture is already loaded to avoid reapplying parameters
-    if (!bathroomTextures[index]) {
-      bathroomTextures[index] = loadTextureAndApplyParameters('models/textures/' + index + '.jpg');
-    }
   }
 
   if (bathrooms[index] && bathroomTextures[index]) {
@@ -58,12 +55,16 @@ function draw() {
 }
 
 function loadTextureAndApplyParameters(path) {
-  return loadImage(path, img => {
-    let gl = this._renderer.GL;
-    gl.bindTexture(gl.TEXTURE_2D, img._renderer.glTexture);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  return loadImage(path, function(img) {
+    if (this._renderer && img._renderer && img._renderer.glTexture) {
+      let gl = this._renderer.GL;
+      gl.bindTexture(gl.TEXTURE_2D, img._renderer.glTexture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    } else {
+      console.error('Failed to apply texture parameters for', path);
+    }
   });
 }
 
