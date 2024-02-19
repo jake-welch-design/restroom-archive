@@ -3,7 +3,7 @@ let bathroomTextures = [];
 let modelNum = 16;
 let bathroomSelector;
 let font;
-let lastSliderValue = -1; 
+let lastSliderValue = -1;
 
 function preload() {
   font = loadFont('fonts/Satoshi-Regular.otf');
@@ -23,25 +23,24 @@ function setup() {
   perspective(PI / 3.0, width / height, 0.5, 5000);
 
   for (let i = 0; i < modelNum; i++) {
-    bathrooms[i] = null; 
-    bathroomTextures[i] = null; 
+    bathrooms[i] = null;
+    bathroomTextures[i] = loadTextureAndApplyParameters('models/textures/' + i + '.jpg');
   }
 }
 
 function draw() {
-  
   background(255);
 
   let index = bathroomSelector.value();
 
-  // Load model and texture on demand
   if (index !== lastSliderValue) {
     lastSliderValue = index;
-    if (!bathrooms[index]) { 
+    if (!bathrooms[index]) {
       bathrooms[index] = loadModel('models/' + index + '.obj', true);
     }
-    if (!bathroomTextures[index]) { 
-      bathroomTextures[index] = loadImage('models/textures/' + index + '.jpg');
+    // Check if the texture is already loaded to avoid reapplying parameters
+    if (!bathroomTextures[index]) {
+      bathroomTextures[index] = loadTextureAndApplyParameters('models/textures/' + index + '.jpg');
     }
   }
 
@@ -55,6 +54,19 @@ function draw() {
     pop();
   }
 
+  updateModelDescription(index);
+}
+
+function loadTextureAndApplyParameters(path) {
+  return loadImage(path, img => {
+    let gl = this._renderer.GL;
+    gl.bindTexture(gl.TEXTURE_2D, img._renderer.glTexture);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  });
+}
+
+function updateModelDescription(index) {
   let descriptions = [
     "Salt Lake City, UT\nHSL Restaurant\n40.76 N, 111.88W\n\n18 March 2023\n10:00 PM", //model 0
     "Washington, UT\nMinute Mart\n37.13 N, 113.53 W\n\n23 April 2023\n11:49 AM", //model 1
