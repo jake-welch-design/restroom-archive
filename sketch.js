@@ -47,22 +47,20 @@ function draw() {
 }
 
 function loadTextureAndApplyParameters(path) {
-  return loadImage(path, img => {
-    if (img.width && img.height) { // Ensure the image is loaded
+  return loadImage(path, function(img) {
+    // Move this check inside the callback
+    if (this._renderer && this._renderer.GL && img._renderer && img._renderer.glTexture) {
       let gl = this._renderer.GL;
-      try {
-        gl.bindTexture(gl.TEXTURE_2D, img._renderer.glTexture);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-      } catch (error) {
-        console.error('Error applying texture parameters:', error);
-      }
+      gl.bindTexture(gl.TEXTURE_2D, img._renderer.glTexture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
     } else {
-      console.error('Image not loaded for texture parameters:', path);
+      console.error('Failed to apply texture parameters for', path);
     }
   });
 }
+
 
 function updateModelDescription(index) {
   let descriptions = [
