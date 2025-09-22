@@ -1,6 +1,1 @@
-# restroom-archive
-An archive of public restrooms 
-
-At the beginning of 2023, I thought it would be funny to 3D scan a public restroom using the app Polycam. However, the more restrooms I scanned, the more I appreciated their chaotic nature as some of the few private unmonitored public spaces. From neglected truck stops to restrooms at Disnelyand & Yellowstone National park, this in-progress archive aims to capture these bizarre spaces & all of their artifacts. 
-
-The 3D viewing tool was developed using p5.js.
+The Restroom Archive is an ongoing case study that aims to document and celebrate the public restroom. What started as a joke in 2023 has become a years-long practice of 3D scanning the restrooms in restaurants, gas stations, convenience stores, coffee shops, and various other spaces across the U.S. and Europe. The scans are meant to capture the humorous, chaotic, and often scary nature of these uniquely private publicly accessible spaces. Through capturing the diverse decor, graffiti, and artifacts, both stored and left behind, I consider public restrooms to be a reflection of both the creativity and impertinence of human nature when we think nobody else is watching.
